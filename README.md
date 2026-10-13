@@ -1,6 +1,5 @@
 # crypto-foundation-forecast: Does a Time-Series Foundation Model Add Predictive & Risk-Forecasting Value Over Classical Baselines in Cryptocurrency Markets?
 
-[![CI](https://github.com/quant-research/crypto-foundation-forecast/actions/workflows/ci.yml/badge.svg)](https://github.com/quant-research/crypto-foundation-forecast/actions/workflows/ci.yml)
 [![Python 3.11+](https://img.shields.io/badge/python-3.11+-blue.svg)](https://www.python.org/downloads/)
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache_2.0-yellow.svg)](https://opensource.org/licenses/Apache-2.0)
 [![Anti-Leakage: Verified](https://img.shields.io/badge/anti--leakage-verified-green.svg)](#3-methodological-rigor--anti-leakage-protocol)
