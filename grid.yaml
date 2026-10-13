@@ -1,0 +1,159 @@
+# Pre-registered experimental trial grid
+# MUST be registered in advance to fix N_trials for Deflated Sharpe Ratio (DSR)
+# and Combinatorially Symmetric Cross-Validation (CSCV) Probability of Backtest Overfitting (PBO).
+
+grid_metadata:
+  created_at: "2026-10-05T15:50:00Z"
+  status: "LOCKED_PRE_EXECUTION"
+  description: "Exhaustive trial grid covering baselines, feature ablations, foundation model configs, and multitask loss weights"
+
+feature_sets:
+  - id: "F0_ohlcv_only"
+    description: "Pure OHLCV features (log returns, GK vol, Parkinson vol)"
+    derivatives: false
+    flow: false
+    cross_asset: false
+
+  - id: "F1_with_derivatives"
+    description: "OHLCV + Basis + 8h Funding Rate + Open Interest"
+    derivatives: true
+    flow: false
+    cross_asset: false
+
+  - id: "F2_with_flow"
+    description: "OHLCV + Derivatives + Taker Buy/Sell Imbalance Flow"
+    derivatives: true
+    flow: true
+    cross_asset: false
+
+  - id: "F3_full_universe"
+    description: "OHLCV + Derivatives + Flow + Cross-asset ETH/BTC interactions"
+    derivatives: true
+    flow: true
+    cross_asset: true
+
+trials:
+  # Classical Baselines (Trials 1-12)
+  - trial_id: 1
+    model_family: "baseline"
+    model_name: "random_walk"
+    feature_set: "F0_ohlcv_only"
+    hyperparameters: { window: 24 }
+
+  - trial_id: 2
+    model_family: "baseline"
+    model_name: "historical_mean"
+    feature_set: "F0_ohlcv_only"
+    hyperparameters: { window: 168 }
+
+  - trial_id: 3
+    model_family: "baseline"
+    model_name: "har_rv"
+    feature_set: "F0_ohlcv_only"
+    hyperparameters: { windows: [24, 168, 720], hac_lags: 24 }
+
+  - trial_id: 4
+    model_family: "baseline"
+    model_name: "garch_1_1"
+    feature_set: "F0_ohlcv_only"
+    hyperparameters: { p: 1, q: 1, dist: "t" }
+
+  - trial_id: 5
+    model_family: "baseline"
+    model_name: "gjr_garch_1_1"
+    feature_set: "F0_ohlcv_only"
+    hyperparameters: { p: 1, o: 1, q: 1, dist: "t" }
+
+  - trial_id: 6
+    model_family: "ml"
+    model_name: "lightgbm"
+    feature_set: "F0_ohlcv_only"
+    hyperparameters: { learning_rate: 0.03, num_leaves: 31, n_estimators: 300 }
+
+  - trial_id: 7
+    model_family: "ml"
+    model_name: "lightgbm"
+    feature_set: "F1_with_derivatives"
+    hyperparameters: { learning_rate: 0.03, num_leaves: 31, n_estimators: 300 }
+
+  - trial_id: 8
+    model_family: "ml"
+    model_name: "lightgbm"
+    feature_set: "F2_with_flow"
+    hyperparameters: { learning_rate: 0.03, num_leaves: 31, n_estimators: 300 }
+
+  - trial_id: 9
+    model_family: "ml"
+    model_name: "lightgbm"
+    feature_set: "F3_full_universe"
+    hyperparameters: { learning_rate: 0.03, num_leaves: 31, n_estimators: 300 }
+
+  - trial_id: 10
+    model_family: "ml"
+    model_name: "lightgbm_regularized"
+    feature_set: "F3_full_universe"
+    hyperparameters: { learning_rate: 0.01, num_leaves: 15, n_estimators: 500, reg_alpha: 0.1, reg_lambda: 1.0 }
+
+  # Foundation Model - NVIDIA Kumo-TS (Trials 11-20)
+  - trial_id: 11
+    model_family: "foundation"
+    model_name: "kumo_forecast_zero_shot"
+    feature_set: "F0_ohlcv_only"
+    hyperparameters: { seq_len: 512, forecast_horizon: 24, mode: "zero_shot", darr: false }
+
+  - trial_id: 12
+    model_family: "foundation"
+    model_name: "kumo_forecast_zero_shot_darr"
+    feature_set: "F0_ohlcv_only"
+    hyperparameters: { seq_len: 512, forecast_horizon: 24, mode: "zero_shot", darr: true }
+
+  - trial_id: 13
+    model_family: "foundation"
+    model_name: "kumo_forecast_head_finetune"
+    feature_set: "F0_ohlcv_only"
+    hyperparameters: { seq_len: 512, forecast_horizon: 24, mode: "head_finetune", lr: 1e-4, epochs: 5 }
+
+  - trial_id: 14
+    model_family: "foundation"
+    model_name: "kumo_forecast_head_finetune"
+    feature_set: "F1_with_derivatives"
+    hyperparameters: { seq_len: 512, forecast_horizon: 24, mode: "head_finetune", lr: 1e-4, epochs: 5 }
+
+  - trial_id: 15
+    model_family: "foundation"
+    model_name: "kumo_forecast_head_finetune"
+    feature_set: "F3_full_universe"
+    hyperparameters: { seq_len: 512, forecast_horizon: 24, mode: "head_finetune", lr: 1e-4, epochs: 5 }
+
+  - trial_id: 16
+    model_family: "foundation"
+    model_name: "kumo_forecast_backbone_finetune"
+    feature_set: "F3_full_universe"
+    hyperparameters: { seq_len: 512, forecast_horizon: 24, mode: "backbone_finetune", lr: 1e-5, epochs: 3 }
+
+  # Multitask Loss Weighting Trials (Trials 17-20)
+  - trial_id: 17
+    model_family: "foundation"
+    model_name: "kumo_forecast_multitask_balanced"
+    feature_set: "F3_full_universe"
+    hyperparameters: { l_nll: 1.0, l_mse: 1.0, l_bce: 0.5, l_pinball: 1.0 }
+
+  - trial_id: 18
+    model_family: "foundation"
+    model_name: "kumo_forecast_multitask_vol_focus"
+    feature_set: "F3_full_universe"
+    hyperparameters: { l_nll: 0.5, l_mse: 3.0, l_bce: 0.2, l_pinball: 0.5 }
+
+  - trial_id: 19
+    model_family: "foundation"
+    model_name: "kumo_forecast_multitask_tail_focus"
+    feature_set: "F3_full_universe"
+    hyperparameters: { l_nll: 1.0, l_mse: 0.5, l_bce: 0.2, l_pinball: 3.0 }
+
+  - trial_id: 20
+    model_family: "anomaly"
+    model_name: "kumo_anomaly_diffusion"
+    feature_set: "F2_with_flow"
+    hyperparameters: { threshold_strategy: "scs", nsample: 15 }
+
+total_pre_registered_trials: 20

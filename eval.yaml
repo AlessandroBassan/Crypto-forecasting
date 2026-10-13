@@ -1,0 +1,40 @@
+# Evaluation, cross-validation, and risk configuration
+
+validation:
+  scheme: "purged_walk_forward" # and "cpcv"
+  n_splits: 5
+  purge_bars: 24   # Minimum 24 bars to avoid overlap
+  embargo_bars: 24 # 24 bars embargo to avoid serial correlation leakage
+  test_size_bars: 4320 # ~6 months per test split
+
+risk_quantiles:
+  taus: [0.01, 0.025, 0.05, 0.5, 0.95, 0.975, 0.99]
+  var_confidence_levels: [0.95, 0.99]
+  es_confidence_levels: [0.95, 0.99]
+
+multitask_loss_weights:
+  lambda_nll_student_t: 1.0 # Return distribution
+  lambda_mse_log_vol: 1.0   # Garman-Klass log vol
+  lambda_bce_direction: 0.5 # Directional accuracy
+  lambda_pinball_quantiles: 1.0 # VaR quantiles
+
+sub_periods:
+  regime_1_bull_2021:
+    start: "2021-01-01"
+    end: "2021-12-31"
+  regime_2_crash_2022:
+    start: "2022-01-01"
+    end: "2022-12-31"
+  regime_3_recovery_2023:
+    start: "2023-01-01"
+    end: "2023-12-31"
+  regime_4_etf_2024:
+    start: "2024-01-01"
+    end: "2024-12-31"
+
+statistical_tests:
+  diebold_mariano_hac_lags: 24
+  mincer_zarnowitz_alpha: 0.05
+  kupiec_pof_alpha: 0.05
+  christoffersen_alpha: 0.05
+  acerbi_szekely_simulations: 1000

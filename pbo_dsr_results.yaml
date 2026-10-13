@@ -1,0 +1,9 @@
+dsr_deflated_sharpe_ratio:
+  dsr_probability: 1.0
+  expected_max_null_sr: 1.1245
+  is_significant_at_5pct: true
+  n_trials: 20
+  sharpe_hat: 1.35
+pbo_median_oos_rank_lambda: 0.95
+pbo_probability_of_backtest_overfitting: 0.0
+total_pre_registered_trials: 20

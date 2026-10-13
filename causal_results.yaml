@@ -1,0 +1,73 @@
+double_ml_funding_on_vol:
+  ci_95_lower: -1.96
+  ci_95_upper: 1.96
+  is_significant_5pct: false
+  p_value: 1.0
+  std_error: 1.0
+  t_statistic: 0.0
+  theta_hat: 0.0
+event_study_liquidation:
+  is_significant_5pct: false
+  n_events: 474
+  post_car_p_value: 0.1164
+  post_car_t_stat: -1.57
+predictive_causality_flow_to_vol:
+  classification: Strictly PREDICTIVE precedence, not structural causation
+  granger_tests:
+    1:
+      f_stat: 3.87
+      is_predictively_significant_5pct: true
+      p_value: 0.0492
+    2:
+      f_stat: 1.668
+      is_predictively_significant_5pct: false
+      p_value: 0.1887
+    3:
+      f_stat: 1.665
+      is_predictively_significant_5pct: false
+      p_value: 0.1722
+  transfer_entropy:
+    directed_transfer_entropy_bits: 0.00144
+    interpretation: Directed Predictive Information Flow (Shannon bits)
+rdd_funding_settlement:
+  placebo_cutoff_minus_2h:
+    bandwidth_hours: 1.5
+    cutoff: -2.0
+    is_significant_5pct: false
+    p_value: .nan
+    std_error: 0.0
+    t_statistic: .nan
+    tau_discontinuity: 0.0
+  placebo_cutoff_plus_2h:
+    bandwidth_hours: 1.5
+    cutoff: 2.0
+    is_significant_5pct: false
+    p_value: .nan
+    std_error: 0.0
+    t_statistic: .nan
+    tau_discontinuity: 0.0
+  real_cutoff_at_settlement:
+    bw_1.0h:
+      bandwidth_hours: 1.0
+      cutoff: 0.0
+      is_significant_5pct: false
+      p_value: .nan
+      std_error: 0.0
+      t_statistic: .nan
+      tau_discontinuity: 0.0
+    bw_2.0h:
+      bandwidth_hours: 2.0
+      cutoff: 0.0
+      is_significant_5pct: false
+      p_value: .nan
+      std_error: 0.0
+      t_statistic: .nan
+      tau_discontinuity: 0.0
+    bw_3.0h:
+      bandwidth_hours: 3.0
+      cutoff: 0.0
+      is_significant_5pct: false
+      p_value: .nan
+      std_error: 0.0
+      t_statistic: .nan
+      tau_discontinuity: 0.0

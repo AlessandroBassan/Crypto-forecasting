@@ -1,0 +1,37 @@
+# Feature engineering configuration
+
+windows:
+  short: 24      # 1 day (24 bars)
+  medium: 168    # 1 week (168 bars)
+  long: 720      # 30 days (720 bars)
+
+ohlcv_features:
+  log_returns: [1, 3, 6, 12, 24, 72, 168]
+  garman_klass_vol: [24, 72, 168, 720]
+  parkinson_vol: [24, 72, 168, 720]
+  realized_vol: [24, 72, 168, 720]
+  volume_log1p: true
+  volume_zscore_windows: [24, 168]
+
+derivatives_features:
+  include_basis: true
+  basis_windows: [1, 24, 168]
+  include_funding: true
+  funding_lags: [1, 2, 3] # Historical settled funding rates
+  funding_settlement_interval_hours: 8
+  include_open_interest: true
+  open_interest_log1p: true
+  open_interest_delta_windows: [1, 24]
+
+flow_features:
+  include_taker_imbalance: true # Proxy from 1H klines: (taker_buy_vol / total_vol) - 0.5
+  imbalance_rolling_means: [6, 24, 72]
+
+calendar_features:
+  hour_sin_cos: true
+  day_of_week_sin_cos: true
+
+normalization:
+  method: "median_mad" # Robust causal scaling: (x - median) / MAD
+  fit_on: "train_only"
+  eps: 1e-6

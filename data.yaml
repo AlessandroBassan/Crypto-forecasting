@@ -1,0 +1,45 @@
+# Data configuration for crypto-foundation-forecast
+
+project:
+  name: "crypto-foundation-forecast"
+  seed: 42
+
+assets:
+  symbols:
+    - "BTCUSDT"
+    - "ETHUSDT"
+  market_types:
+    - "spot"
+    - "perp" # Binance USD-M Perpetual (um)
+  primary_symbol: "BTCUSDT"
+  reference_symbol: "ETHUSDT"
+
+time:
+  start_date: "2021-01-01"
+  end_date: "2024-12-31"
+  frequency: "1h"
+  timezone: "UTC"
+
+sources:
+  binance_vision:
+    base_url: "https://data.binance.vision"
+    futures_monthly_klines: "data/futures/um/monthly/klines"
+    spot_monthly_klines: "data/spot/monthly/klines"
+    funding_rate: "data/futures/um/monthly/fundingRate"
+    metrics_daily: "data/futures/um/daily/metrics"
+  binance_api:
+    fapi_url: "https://fapi.binance.com"
+    api_url: "https://api.binance.com"
+
+storage:
+  raw_dir: "data/raw"
+  interim_dir: "data/interim"
+  processed_dir: "data/processed"
+
+cleaning:
+  winsorize_returns:
+    lower_quantile: 0.001
+    upper_quantile: 0.999
+  gap_threshold_hours: 2
+  flag_zero_volume: true
+  drop_corrupted_bars: true
