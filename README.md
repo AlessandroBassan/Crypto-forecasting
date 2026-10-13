@@ -90,7 +90,7 @@ The table below reports out-of-sample evaluation across **7,176 hourly bars** un
 | 20 | kumo_anomaly_diff | F2_with_flow | - | - | - | - | - | - | - | - | - | - | - | - | 0.6402 | 8,736 |
 
 *(Note: Volatility benchmark figure reproduced by `make report` / `make all`)*
-![Volatility Benchmark](results/figure1_volatility_benchmark.png)
+![Volatility Benchmark](figure1_volatility_benchmark.png)
 
 ---
 
@@ -115,7 +115,7 @@ Evaluating stability across bull, bear, and consolidation market regimes:
 | :--- | :---: | :---: | :---: | :---: |
 | **Regime 1: Bull Run** | 7,991 | 0.25733 [0.21099, 0.31071] | 0.11026 | 0.20184 |
 
-![Feature Ablation and Regimes](results/figure2_ablation_and_regimes.png)
+![Feature Ablation and Regimes](figure2_ablation_and_regimes.png)
 
 ---
 
@@ -130,7 +130,7 @@ To prevent false discoveries, we distinguish between **causal identification** (
 | **Regression Discontinuity** | Discontinuous jump in basis across 8-hour settlement deadline | -0.000001 | 0.000016 | $t = -0.088$ | 0.93010 | Local continuity of potential outcomes at midnight, 08:00, 16:00 UTC | **Smooth Hedging**: Arbitrageurs hedge continuously; no discrete structural jump at settlement |
 | **Granger & Transfer Entropy** | Information transfer from taker volume flow to volatility | +0.00364 | - | $F = 4.804$ | 0.02840 | None (purely temporal predictive precedence) | **PREDICTIVE ONLY**: Taker flow transmits lead-lag price discovery information (0.0036 bits) without physical causation |
 
-![Causal Event Study](results/figure3_causal_event_study.png)
+![Causal Event Study](figure3_causal_event_study.png)
 
 ---
 
@@ -152,7 +152,7 @@ deflated_sharpe_ratio_dsr: 1.0000
 - **PBO (CSCV)**: Across all $\binom{16}{8} = 12,870$ combinatorial splits, the probability of selecting an in-sample optimal strategy that underperforms out-of-sample is **0.0000**.
 - **Deflated Sharpe Ratio (DSR)**: With a nominal annualized Sharpe of 1.35 and 20 trials, DSR is **1.0000** ($> 0.95$), confirming statistical significance even after penalizing for trial count.
 
-![Risk and Overfitting](results/figure4_risk_and_pbo.png)
+![Risk and Overfitting](figure4_risk_and_pbo.png)
 
 ---
 
